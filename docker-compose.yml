@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  calories-service:
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    depends_on:
+      - calories-db
+    environment:
+      CALORIES_DB_URL: ${CALORIES_DB_URL}
+      CALORIES_DB_USERNAME: ${CALORIES_DB_USERNAME}
+      CALORIES_DB_PASSWORD: ${CALORIES_DB_PASSWORD}
+      CALORIES_DB_NAME: ${CALORIES_DB_NAME}
+      DB_PORT: ${DB_PORT}
+  calories-db:
+    image: postgres:15
+    container_name: ${CALORIES_DB_URL}
+    restart: always
+    environment:
+      POSTGRES_USER: ${CALORIES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${CALORIES_DB_PASSWORD}
+      POSTGRES_DB: ${CALORIES_DB_NAME}
